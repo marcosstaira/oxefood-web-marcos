@@ -6,7 +6,7 @@ import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 
 export default function FormCliente () {
 
-     const [nome, setNome] = useState();
+    const [nome, setNome] = useState();
    const [cpf, setCpf] = useState();
    const [dataNascimento, setDataNascimento] = useState();
    const [foneCelular, setFoneCelular] = useState();
@@ -36,6 +36,7 @@ export default function FormCliente () {
     return (
 
         <div>
+
 
             <div style={{marginTop: '3%'}}>
 

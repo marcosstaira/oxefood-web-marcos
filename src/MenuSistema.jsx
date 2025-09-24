@@ -1,40 +1,51 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import { Menu } from "semantic-ui-react";
+import { Icon, Menu } from 'semantic-ui-react';
 
-export default function MenuSistema (props) {
+function MenuSistema() {
 
-   return(
-       <>
-           <Menu inverted>
-              
-               <Menu.Item
-                   content='Home'
-                   active={props.tela === 'home'}
-                   as={Link}
-                   to='/'
-               />
-               <Menu.Item
-                   content='Cliente'
-                   active={props.tela === 'cliente'}
-                   as={Link}
-                   to='/form-cliente'
-               />
-   <Menu.Item
-                   content='Produto'
-                   active={props.tela === 'produto'}
-                   as={Link}
-                   to='/form-produto'
-               />
+    return (
+        <Menu inverted>
 
-               <Menu.Item
-                   content='Entregador'
-                   active={props.tela === 'entregador'}
-                   as={Link}
-                   to='/form-entregador'
-               />
+            <Menu.Item
+                name='home'
+                as={Link} 
+                to='/' 
+            >
+                <Icon name='home' />
+                Home
+            </Menu.Item>
 
-           </Menu>
-       </>
-   )
+       
+            <Menu.Item
+                name='cliente'
+                as={Link}
+                to='/form-cliente' 
+            >
+                <Icon name='users' />
+                Cliente
+            </Menu.Item>
+
+
+            <Menu.Item
+                name='produto'
+                as={Link}
+                to='/form-produto' 
+            >
+                <Icon name='box' />
+                Produto
+            </Menu.Item>
+
+            <Menu.Item
+                name='entregador'
+                as={Link}
+                to='/form-entregador'
+            >
+                <Icon name='truck' />
+                Entregador
+            </Menu.Item>
+
+        </Menu>
+    )
 }
+
+export default MenuSistema;

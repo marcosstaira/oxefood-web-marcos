@@ -1,51 +1,52 @@
-import { useState } from "react";
-
 import axios from "axios";
-import InputMask from 'comigo-tech-react-input-mask';
+import { useState } from "react";
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 
-export default function FormCliente () {
 
-     const [nome, setNome] = useState();
-   const [cpf, setCpf] = useState();
-   const [dataNascimento, setDataNascimento] = useState();
-   const [foneCelular, setFoneCelular] = useState();
-   const [foneFixo, setFoneFixo] = useState();
+export default function FormProduto() {
 
-   function salvar() {
+    const [codigo, setCodigo] = useState();
+    const [titulo, setTitulo] = useState();
+    const [descricao, setDescricao] = useState();
+    const [valorUnitario, setValorUnitario] = useState();
+    const [tempoEntregaMinimo, setTempoEntregaMinimo] = useState();
+    const [tempoEntregaMaximo, setTempoEntregaMaximo] = useState();
 
-		let clienteRequest = {
-		     nome: nome,
-		     cpf: cpf,
-		     dataNascimento: dataNascimento,
-		     foneCelular: foneCelular,
-		     foneFixo: foneFixo
-		}
-	
-		axios.post("http://localhost:8080/api/cliente", clienteRequest)
-		.then((response) => {
-		     console.log('Cliente cadastrado com sucesso.')
-		})
-		.catch((error) => {
-		     console.log('Erro ao incluir o um cliente.')
-		})
-	}
+    function salvar() {
 
+        let produtoRequest = {
+            codigo: codigo,
+            titulo: titulo,
+            descricao: descricao,
+            valorUnitario: parseFloat(valorUnitario),
+            tempoEntregaMinimo: parseInt(tempoEntregaMinimo),
+            tempoEntregaMaximo: parseInt(tempoEntregaMaximo)
+        }
+
+        axios.post("http://localhost:8080/api/produto", produtoRequest)
+            .then((response) => {
+                console.log('Produto cadastrado com sucesso.')
+            })
+            .catch((error) => {
+                console.log('Erro ao incluir o um produto.')
+            })
+    }
 
 
     return (
 
         <div>
 
-            <div style={{marginTop: '3%'}}>
+            <div style={{ marginTop: '3%' }}>
 
                 <Container textAlign='justified' >
 
-                    <h2> <span style={{color: 'darkgray'}}> Cliente &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro </h2>
+                    {/* Produto */}
+                    <h2> <span style={{ color: 'darkgray' }}> Produto &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro </h2>
 
                     <Divider />
 
-                    <div style={{marginTop: '4%'}}>
+                    <div style={{ marginTop: '4%' }}>
 
                         <Form>
 
@@ -54,70 +55,69 @@ export default function FormCliente () {
                                 <Form.Input
                                     required
                                     fluid
-                                    label='Nome'
+                                    label='Título'
                                     maxLength="100"
-                                    value={nome}
-			                        onChange={e => setNome(e.target.value)}
-
+                                    placeholder="Ex: Tênis Nike Air Max"
+                                    value={titulo}
+                                    onChange={e => setTitulo(e.target.value)}
                                 />
 
                                 <Form.Input
                                     required
                                     fluid
-                                    label='CPF'>
-                                    <InputMask
-                                        required
-                                        mask="999.999.999-99"
-                                        value={cpf}
-				                        onChange={e => setCpf(e.target.value)}
-                                    /> 
-                                </Form.Input>
+                                    label='Código do Produto'
+                                    placeholder="Ex: 12345"
+                                    value={codigo}
+                                    onChange={e => setCodigo(e.target.value)}
+                                />
 
                             </Form.Group>
                             
+                            <Form.TextArea
+                                fluid
+                                label='Descrição'
+                                placeholder='Descreva o produto aqui...'
+                                value={descricao}
+                                onChange={e => setDescricao(e.target.value)}
+                            />
+
                             <Form.Group>
-
                                 <Form.Input
+                                    required
                                     fluid
-                                    label='Fone Celular'
-                                    width={6}>
-                                    <InputMask 
-                                        mask="(99) 9999.9999"
-                                        value={foneCelular}
-				                        onChange={e => setFoneCelular(e.target.value)}
-                                    /> 
-                                </Form.Input>
-
-                                <Form.Input
-                                    fluid
-                                    label='Fone Fixo'
-                                    width={6}>
-                                    <InputMask 
-                                        mask="(99) 9999.9999"
-                                        value={foneFixo}
-				                        onChange={e => setFoneFixo(e.target.value)}
-                                    /> 
-                                </Form.Input>
-
-                                <Form.Input
-                                    fluid
-                                    label='Data Nascimento'
+                                    label='Valor Unitário'
                                     width={6}
-                                >
-                                    <InputMask 
-                                        mask="99/99/9999" 
-                                        maskChar={null}
-                                        placeholder="Ex: 20/03/1985"
-                                        value={dataNascimento}
-				                        onChange={e => setDataNascimento(e.target.value)}
-                                    /> 
-                                </Form.Input>
+                                    type='number'
+                                    step='0.01'
+                                    placeholder="Ex: 599.99"
+                                    value={valorUnitario}
+                                    onChange={e => setValorUnitario(e.target.value)}
+                                />
 
+                                <Form.Input
+                                    fluid
+                                    label='Tempo de Entrega Mínimo em Minutos'
+                                    placeholder="Ex: 30"
+                                    width={6}
+                                    type='number'
+                                    value={tempoEntregaMinimo}
+                                    onChange={e => setTempoEntregaMinimo(e.target.value)}
+                                />
+
+                                <Form.Input
+                                    fluid
+                                    label='Tempo de Entrega Máximo em Minutos'
+                                    placeholder="Ex: 60"
+                                    width={6}
+                                    type='number'
+                                    value={tempoEntregaMaximo}
+                                    onChange={e => setTempoEntregaMaximo(e.target.value)}
+                                />
                             </Form.Group>
-                        
+
                         </Form>
-                        
-                        <div style={{marginTop: '4%'}}>
+
+                        <div style={{ marginTop: '4%' }}>
 
                             <Button
                                 type="button"
@@ -130,7 +130,7 @@ export default function FormCliente () {
                                 <Icon name='reply' />
                                 Voltar
                             </Button>
-                                
+
                             <Button
                                 inverted
                                 circular
@@ -147,7 +147,7 @@ export default function FormCliente () {
                         </div>
 
                     </div>
-                    
+
                 </Container>
             </div>
         </div>
