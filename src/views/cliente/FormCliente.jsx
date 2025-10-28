@@ -3,6 +3,10 @@ import { useState } from "react";
 import axios from "axios";
 import InputMask from 'comigo-tech-react-input-mask';
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
+import { notifyError, notifySuccess } from '../../views/util/Util';
+
+
+
 
 export default function FormCliente () {
 
@@ -24,10 +28,17 @@ export default function FormCliente () {
 	
 		axios.post("http://localhost:8080/api/cliente", clienteRequest)
 		.then((response) => {
-		     console.log('Cliente cadastrado com sucesso.')
+		     notifySuccess('Cliente cadastrado com sucesso.')
 		})
 		.catch((error) => {
-		     console.log('Erro ao incluir o um cliente.')
+		     if (error.response.data.errors != undefined) {
+       		for (let i = 0; i < error.response.data.errors.length; i++) {
+	       		notifyError(error.response.data.errors[i].defaultMessage)
+	    	}
+	} else {
+		notifyError(error.response.data.message)
+	}
+
 		})
 	}
 
